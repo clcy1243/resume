@@ -70,24 +70,34 @@
     
     ```mermaid
     flowchart TD
-    subgraph "用户权限存储(运行时)"
-        role2[角色] --> app3[应用]
-        app3[应用] --> | 1:n | perm3[权限]
-        app3[应用] --> | 1:n | node3[数据节点]
+    subgraph USER_RUNTIME["用户权限存储(运行时)"]
+        user3[用户]
+        app3[应用]
+        perm3[权限]
+        bussiness3[业务线]
+        node3[数据节点]
+        user3 -->|1:n| app3 -->|1:n| perm3 & bussiness3
+        bussiness3 -->|1:n| node3
     end
-    subgraph "用户权限结构(配置时)"
-        user[用户] --> | 1:n | position[职位] --> | 1:n | role[角色]
-        user[用户] --> | 1:n | role[角色]
-        role[角色] --> app2[应用] --> | 1:n | pk2[权限包]
-        app2[应用] --> | 1:n | gr2[权限组]
-        app2[应用] --> | 1:n | perm2[权限]
-        app2[应用] --> | 1:n | node2[数据节点]
+    subgraph USER_CONFIG["用户权限结构(配置时)"]
+        user2[用户]
+        position2[职位]
+        app2[应用]
+        role2[角色]
+        perm_group2[权限组]
+        perm2[权限]
+        bussiness2[业务线]
+        node2[数据节点]
+        user2 -->|1:n| position2 -->|1:n| app2 -->|1:n| role2 & perm_group2 & perm2 & bussiness2
+        bussiness2 -->|1:n| node2 -->|1:n| node2
     end
-    subgraph 基本应用权限结构
-        app1[应用] --> | 1:n | pk1[权限包]
-        pk1[权限包] --> | 1:n | gr1[权限组]
-        gr1[权限组] --> | 1:n | perm1[权限]
-        pk1[权限包] --> | 1:n | node1[数据节点]
-        node1[数据节点] --> | 1:n | node1[数据节点]
+    subgraph APP_AUTH[基本应用权限结构]
+        role1[角色]
+        perm_group1[权限组]
+        perm1[权限]
+        bussiness1[业务线]
+        node1[数据节点]
+        role1 -->|1:n| perm_group1 -->|1:n| perm1
+        role1 -->|1:n| bussiness1 -->|1:n| node1 -->|1:n| node1
     end
     ```
