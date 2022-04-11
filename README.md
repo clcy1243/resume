@@ -39,8 +39,11 @@
     - 通信图示例
     ```mermaid
     flowchart LR
-    client <-->|socket channel| gateway1 & gateway2 <-->|service mq channel| service
-    gateway1 <-.->|instance mq channel| gateway2
+    subgraph GW
+        direction TB
+        gateway1 <-.->|instance mq channel| gateway2
+    end
+    client <-->|socket channel| GW <-->|service mq channel| service
     ```
     - 详细设计[Websocket 网关设计](./socket-gateway.md) 
 
