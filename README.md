@@ -87,6 +87,7 @@
         perm2[权限]
         bussiness2[业务线]
         node2[数据节点]
+        user2 -->|1:n| app2
         user2 -->|1:n| position2 -->|1:n| app2 -->|1:n| role2 & perm_group2 & perm2 & bussiness2
         bussiness2 -->|1:n| node2 -->|1:n| node2
     end
