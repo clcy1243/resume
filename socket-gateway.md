@@ -2,10 +2,8 @@
 
 目录
 =================
-* [WebSocket 网关](#websocket-网关)
-* [目录](#目录)
-    * [业务中的应用场景](#业务中的应用场景)
-    * [目前项目实现的预期性能及改进方向](#目前项目实现的预期性能及改进方向)
+* [业务中的应用场景](#业务中的应用场景)
+* [目前项目实现的预期性能及改进方向](#目前项目实现的预期性能及改进方向)
 * [WebSocket 网关的技术实现方案及优缺点](#websocket-网关的技术实现方案及优缺点)
   * [用户多开](#用户多开)
     * [方案一](#方案一)
@@ -21,12 +19,12 @@
   * [网关监控设计](#网关监控设计)
 
 
-### 业务中的应用场景
+# 业务中的应用场景
 - IM通信
 - 用户消息提示
 - 耗时任务同步转异步，需要配合消息提示服务，可以提供消息卡片
 
-### 目前项目实现的预期性能及改进方向
+# 目前项目实现的预期性能及改进方向
 1. 单实例性能预估（4C8G）
    - 预期连接数 100W （LVS负载均衡的情况下）
    - 预期 QPS 30W
@@ -92,8 +90,11 @@ WSG 发消息的场景内
 `依据以上的优缺点，选择 后端多开+二次投递的方案`
 ```mermaid
 flowchart LR
-client <-->|socket channel| gateway1 & gateway2 <-->|service mq channel| service
-gateway1 <-.->|instance mq channel| gateway2
+subgraph GW
+    direction TB
+    gateway1 <-.->|instance mq channel| gateway2
+end
+client <-->|socket channel| GW <-->|service mq channel| service
 ```
 
 ## 前后端交互协议
